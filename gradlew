@@ -27,6 +27,8 @@ cd "$SAVED" >/dev/null
 APP_NAME="Gradle"
 APP_BASE_NAME=`basename "$0"`
 
+CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+
 # Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 DEFAULT_JVM_OPTS=""
 
@@ -112,9 +114,23 @@ if $cygwin ; then
         if [ $CHECK -ne 0 ] && [ $CHECK2 -eq 0 ] ; then                    ### Added a condition
             arg=`cygpath --path --ignore --mixed "$arg"`
         fi
-        ARGS="$ARGS \"$arg\""
+        ARGS="${ARGS:+$ARGS }$arg"
     done
     # Escaping conversion end
+fi
+
+ARGS=""
+
+# Determine the Java command to use to start the JVM.
+if [ -n "$JAVA_HOME" ] ; then
+    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
+        # IBM's JDK on AIX uses strange locations for the executables
+        JAVACMD="$JAVA_HOME/jre/sh/java"
+    else
+        JAVACMD="$JAVA_HOME/bin/java"
+    fi
+else
+    JAVACMD=`which java`
 fi
 
 # Collect all arguments for the java command, following the shell quoting and substitution rules
